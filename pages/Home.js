@@ -24,7 +24,7 @@ const HomeScreen = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/api/teacher?limit=10"
+          "http://10.0.2.2:4000/api/teacher?limit=10"
         );
         setData(response.data.result);
       } catch (error) {
@@ -33,7 +33,7 @@ const HomeScreen = () => {
     };
     const fetchDataSearch = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/teacher");
+        const response = await axios.get("http://10.0.2.2:4000/api/teacher");
         setDataSearch(response.data.result);
       } catch (error) {
         console.error(error);
