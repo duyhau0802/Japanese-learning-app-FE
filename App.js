@@ -7,6 +7,8 @@ import LoginScreen from "./pages/LoginScreen";
 import RegisterScreen from "./pages/RegisterScreen";
 import HomeScreen from "./pages/Home"; // Thêm import này
 import TeacherDetail from "./pages/TeacherDetail";
+import CallScreen from "./pages/CallScreen";
+import PaymentScreen from "./pages/PaymentScreen";
 import AppointmentScreen from "./pages/Appointment";
 
 const Stack = createStackNavigator();
@@ -29,6 +31,8 @@ function App() {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          // component={CallScreen}
+          // component={PaymentScreen}
           options={{ title: "Login" }}
         />
         <Stack.Screen
