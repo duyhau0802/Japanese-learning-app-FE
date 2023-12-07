@@ -20,7 +20,7 @@ const LoginScreen = () => {
   const handleLogin = async (email, password) => {
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/user/login",
+        "http://10.0.2.2:4000/api/user/login",
         {
           email: email.trim(),
           password: password.trim(),
