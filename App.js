@@ -40,6 +40,11 @@ function App() {
           component={HomeScreen}
           options={{ title: "Home" }}
         />
+        <Stack.Screen
+          name="TeacherDetail"
+          component={TeacherDetail}
+          options={{ title: "TeacherDetail" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

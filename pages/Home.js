@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
+import { useNavigation } from "@react-navigation/native";
 
 import Cartegory from "../components/Category/Category";
 import CourseView from "../components/courseView/courseView";
@@ -19,6 +20,7 @@ const HomeScreen = () => {
   const [data, setData] = useState([]);
   const [dataSearch, setDataSearch] = useState([]);
   const [filteredTeachers, setFilteredTeachers] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +47,7 @@ const HomeScreen = () => {
   }, []);
 
   const handleViewDetail = (teacher) => {
-    console.log(`View detail for ${teacher.first_name} ${teacher.last_name}`);
+    navigation.navigate("TeacherDetail");
   };
 
   useEffect(() => {

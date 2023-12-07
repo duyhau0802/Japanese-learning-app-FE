@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff", // Màu nền màu trắng
     padding: 48,
-    borderColor: '#3498db', // Màu xanh nhạt của đường viền
+    borderColor: "#3498db", // Màu xanh nhạt của đường viền
     borderWidth: 5, // Độ dày của đường viền
   },
   title: {
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     color: "#4d382c", // Màu chữ nâu đậm
   },
-  subtitle:{
+  subtitle: {
     fontSize: 14,
     marginBottom: 24,
     color: "#4d382c",
