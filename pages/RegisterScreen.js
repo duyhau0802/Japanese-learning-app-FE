@@ -21,7 +21,7 @@ const RegisterScreen = () => {
 
   const handleRegister = async (email, password, firstName, lastName, role) => {
     try {
-      const response = await fetch("http://localhost:4000/api/user/register", {
+      const response = await fetch("http://10.0.2.2:4000/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

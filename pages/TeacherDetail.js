@@ -9,7 +9,7 @@ const TeacherDetail = () => {
     experience: '200',
     detail_infor:
       'I am an experienced Japanese teacher with a passion for helping students improve their language skills',
-    image: require('../components/Teacher/Teacher.jpg'),
+    image: require('../components/Teacher/teacher.jpg'),
     jp_level:'N2',
     createdAt:'23/11/2023',
   };

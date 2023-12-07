@@ -9,6 +9,7 @@ import HomeScreen from "./pages/Home"; // Thêm import này
 import TeacherDetail from "./pages/TeacherDetail";
 import CallScreen from "./pages/CallScreen";
 import PaymentScreen from "./pages/PaymentScreen";
+import AppointmentScreen from "./pages/Appointment";
 
 const Stack = createStackNavigator();
 
@@ -16,7 +17,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Appointment"
         screenOptions={{
           headerStyle: {
             backgroundColor: "#3498db",
@@ -43,6 +44,11 @@ function App() {
           name="Home"
           component={HomeScreen}
           options={{ title: "Home" }}
+        />
+        <Stack.Screen
+          name="Appointment"
+          component={AppointmentScreen}
+          options={{ title: "Appointment" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
