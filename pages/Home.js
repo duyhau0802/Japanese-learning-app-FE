@@ -26,7 +26,7 @@ const HomeScreen = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://10.0.2.2:4000/api/teacher?limit=10"
+          "http://localhost:4000/api/teacher?limit=10"
         );
         setData(response.data.result);
       } catch (error) {
@@ -35,7 +35,7 @@ const HomeScreen = () => {
     };
     const fetchDataSearch = async () => {
       try {
-        const response = await axios.get("http://10.0.2.2:4000/api/teacher");
+        const response = await axios.get("http://localhost:4000/api/teacher");
         setDataSearch(response.data.result);
       } catch (error) {
         console.error(error);
@@ -47,7 +47,7 @@ const HomeScreen = () => {
   }, []);
 
   const handleViewDetail = (teacher) => {
-    navigation.navigate("TeacherDetail");
+    navigation.navigate("TeacherDetail", { teacherID: teacher });
   };
 
   useEffect(() => {
@@ -140,7 +140,7 @@ const HomeScreen = () => {
                 Gender: {item.gender === "0" ? "Male" : "Female"}
               </Text>
               <TouchableOpacity
-                onPress={() => handleViewDetail(item)}
+                onPress={() => handleViewDetail(item.id)}
                 style={styles.detailButton}
               >
                 <Text style={styles.buttonText}>View Detail</Text>

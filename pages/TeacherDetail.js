@@ -1,13 +1,24 @@
-import React, { useEffect } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, StyleSheet, Touchable } from "react-native";
 import CourseList from "../components/CourseList/CourseList";
 import axios from "axios";
+import { useNavigation, useRoute } from "@react-navigation/core";
+import { TouchableOpacity } from "react-native";
 
 const TeacherDetail = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { teacherID } = route.params;
+  const [teacherDetail, setTeacherDetail] = useState({});
   useEffect(() => {
     const fetchApiTeacher = async () => {
-      const response = await axios.get("http://localhost:4000/");
+      const response = await axios.get(
+        `http://localhost:4000/api/teacher/${teacherID}`
+      );
+      setTeacherDetail(response.data.result);
     };
+
+    fetchApiTeacher();
   }, []);
   const teacherInfo = {
     name: "John Hau",
@@ -23,10 +34,18 @@ const TeacherDetail = () => {
   return (
     <View style={styles.container}>
       <View style={styles.row}>
-        <Image source={teacherInfo.image} style={styles.teacherImage} />
+        <Image
+          source={teacherDetail && teacherDetail.avatar}
+          style={styles.teacherImage}
+        />
         <View style={styles.col}>
-          <Text style={styles.teacherName}>{teacherInfo.name}</Text>
-          <Text style={styles.teacherEmail}>{teacherInfo.email}</Text>
+          <Text style={styles.teacherName}>
+            {teacherDetail &&
+              teacherDetail.first_name + " " + teacherDetail.last_name}
+          </Text>
+          <Text style={styles.teacherEmail}>
+            {teacherDetail && teacherDetail.mail}
+          </Text>
         </View>
         <Text style={styles.phoneSymbol}>✆</Text>
         <Text style={styles.messageSymbol}>💬</Text>
@@ -35,32 +54,42 @@ const TeacherDetail = () => {
       <View style={styles.row}>
         <View style={styles.col}>
           <Text style={styles.h3}>Japanese level </Text>
-          <Text style={styles.h4}>{teacherInfo.jp_level}</Text>
+          <Text style={styles.h4}>
+            {teacherDetail.Teacher && teacherDetail.Teacher.jp_level}
+          </Text>
         </View>
         <View style={styles.col}>
           <Text style={styles.h3}>Experience</Text>
-          <Text style={styles.h4}>{teacherInfo.experience} years</Text>
+          <Text style={styles.h4}>
+            {teacherDetail.Teacher && teacherDetail.Teacher.experience}
+          </Text>
         </View>
       </View>
       <View style={styles.row}>
         <View style={styles.col}>
-          <Text style={styles.h3}>Students</Text>
-          <Text style={styles.h4}>150,000</Text>
-        </View>
-        <View style={styles.col}>
-          <Text style={styles.h3}>Start teaching at</Text>
-          <Text style={styles.h4}>{teacherInfo.createdAt}</Text>
+          <Text style={styles.h3}>Day of birth</Text>
+          <Text style={styles.h4}>{teacherDetail && teacherDetail.dob}</Text>
         </View>
       </View>
       <Text style={styles.h2}>About me</Text>
       <View style={styles.row}>
-        <Text style={styles.TeacherDetail}>{teacherInfo.detail_infor}</Text>
+        <Text style={styles.TeacherDetail}>
+          {teacherDetail.Teacher && teacherDetail.Teacher.detail_infor}
+        </Text>
       </View>
 
       <Text style={styles.h2}>My Courses</Text>
       <View style={styles.row}>
         <CourseList />
       </View>
+      <TouchableOpacity
+        style={styles.SetAppointmentBtn}
+        onPress={() =>
+          navigation.navigate("SetAppointment", { teacherID: teacherID })
+        }
+      >
+        <Text>Add appointment</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -118,6 +147,15 @@ const styles = StyleSheet.create({
     width: 20,
     padding: 10,
     marginBottom: 10,
+  },
+  SetAppointmentBtn: {
+    margin: 10,
+    padding: 10,
+    left: 10,
+    width: 300,
+    backgroundColor: "lightblue",
+    borderRadius: 5,
+    alignItems: "center",
   },
 });
 

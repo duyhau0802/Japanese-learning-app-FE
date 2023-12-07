@@ -20,7 +20,7 @@ const LoginScreen = () => {
   const handleLogin = async (email, password) => {
     try {
       const response = await axios.post(
-        "http://10.0.2.2:4000/api/user/login",
+        "http://localhost:4000/api/user/login",
         {
           email: email.trim(),
           password: password.trim(),
@@ -28,6 +28,7 @@ const LoginScreen = () => {
       );
 
       if (response.data.success === true) {
+        document.cookie = `token=${response.data.accessToken}`;
         setTimeout(() => {
           navigation.navigate("Home");
         }, 2000);
@@ -45,7 +46,7 @@ const LoginScreen = () => {
   };
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign in</Text>
@@ -89,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#fff", // Màu nền da nhẹ nhàng
     padding: 45,
-    borderColor: '#3498db', // Màu xanh nhạt của đường viền
+    borderColor: "#3498db", // Màu xanh nhạt của đường viền
     borderWidth: 5, // Độ dày của đường viền
   },
   title: {
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: "#4d382c", // Màu chữ nâu đậm
   },
-  subtitle:{
+  subtitle: {
     fontSize: 14,
     marginBottom: 24,
     color: "#4d382c",
