@@ -13,6 +13,8 @@ import RegisterScreen from "./pages/RegisterScreen";
 import Course from "./pages/Course";
 import SetAppoinmentScreen from "./pages/SetApointment";
 import CourseDetailScreen from "./pages/CourseDetail";
+import UserProfile from "./pages/Profile";
+import UserDetailPage from "./pages/UserDetailPage";
 
 const Stack = createStackNavigator();
 
@@ -76,6 +78,16 @@ function App() {
           name="SetAppointment"
           component={SetAppoinmentScreen}
           options={{ title: "SetAppointment" }}
+        />
+        <Stack.Screen
+          name="UserProfile"
+          component={UserProfile}
+          options={{ title: "User Profile" }}
+        />
+        <Stack.Screen
+          name="UserDetailPage"
+          component={UserDetailPage}
+          options={{ title: "User Detail" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
