@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { axios } from 'axios';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const PaymentScreen = () => {
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
@@ -9,7 +11,25 @@ const PaymentScreen = () => {
   const [expiryDate, setExpiryDate] = useState('');
   const [cvc, setCvc] = useState('');
 
-  const handlePayment = () => {
+  const amount = 10000
+
+  const handlePayment = async () => {
+    try {
+      const token = document.cookie
+              .split('; ')
+              .find(row => row.startsWith('token='))
+              .split('=')[1]
+      console.log(amount)
+      const response = await axios.post('http://54.164.6.175:3000/api/payment', {
+        headers: {
+          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
+        },
+        amount: amount,
+      })
+      console.log(response.data)
+    } catch (error) {
+      console.error(error)
+    }
     // Handle payment logic here (e.g., send data to server, confirm payment, ...)
     console.log('Payment information:', { paymentMethod, firstName, lastName, cardNumber, expiryDate, cvc });
   };
@@ -40,7 +60,7 @@ const PaymentScreen = () => {
           <Text>PayPal</Text>
         </TouchableOpacity>
       </View>
-
+      <Text>Price: {amount}</Text>
       <TextInput
         style={styles.input}
         placeholder="Full Name"
@@ -50,6 +70,7 @@ const PaymentScreen = () => {
 
       {paymentMethod === 'creditCard' && (
         <>
+          
           <TextInput
             style={styles.input}
             placeholder="Card Number"

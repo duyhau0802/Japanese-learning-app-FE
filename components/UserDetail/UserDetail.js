@@ -1,6 +1,7 @@
 // UserProfileDetail.js
 import React from 'react'
 import { View, Image, TextInput, Button, StyleSheet } from 'react-native'
+import { Axios } from 'axios'
 
 const UserDetail = ({ user }) => {
   return (
