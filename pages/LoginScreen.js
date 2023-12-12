@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import {
+  Alert,
   View,
   Text,
   TextInput,
@@ -24,20 +25,26 @@ const LoginScreen = () => {
         email: email,
         password: password,
       });
-      if (res.data.success === true) {
-        await AsyncStorage.setItem("token", res.data.accessToken);
 
+      if (res.data.success) {
+        await AsyncStorage.setItem("token", res.data.accessToken);
+        Alert.alert("Login successfully !");
         setTimeout(() => {
           navigation.navigate("Home");
         }, 1000);
       } else {
-        console.log(res.data);
+        if (res.error.password) {
+          Alert.alert(res.error.password.msg);
+        } else if (res.error.email) {
+          Alert.alert(res.error.email.msg);
+        } else {
+          Alert.alert("An error occurred during login.");
+        }
       }
     } catch (error) {
-      console.log("Login failed:", error.message);
+      Alert.alert("Login failed, please try again !");
     }
   };
-
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (

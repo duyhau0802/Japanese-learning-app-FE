@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Touchable } from "react-native";
 import CourseList from "../components/CourseList/CourseList";
 import axios from "axios";
 import { useNavigation, useRoute } from "@react-navigation/core";
-import { TouchableOpacity } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 
 const TeacherDetail = () => {
   const navigation = useNavigation();
