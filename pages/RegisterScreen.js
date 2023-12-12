@@ -21,7 +21,7 @@ const RegisterScreen = () => {
 
   const handleRegister = async (email, password, firstName, lastName, role) => {
     try {
-      const response = await fetch("http://localhost:4000/api/user/register", {
+      const res = await fetch("http://54.164.6.175:3000/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -34,7 +34,7 @@ const RegisterScreen = () => {
           role: role.trim(),
         }),
       });
-      const data = await response.json();
+      const data = await res.json();
       if (data.success === true) {
         setTimeout(() => {
           navigation.navigate("Login");

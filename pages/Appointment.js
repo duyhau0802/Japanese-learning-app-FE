@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Appointment = () => {
   const navigation = useNavigation();
@@ -19,17 +20,16 @@ const Appointment = () => {
   useEffect(() => {
     const fetchAPIAppointment = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:4000/api/appointment/studentAppointment",
+        const res = await axios.get(
+          "http://54.164.6.175:3000/api/appointment/studentAppointment",
           {
             headers: {
-              Authorization:
-                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEwNywiaWF0IjoxNzAxOTQ4NzcyLCJleHAiOjE3MDE5NTIzNzJ9.MzvwP4KS_p8JfZRGzlieDM_QQzzmWUZlKCVDf8YyiCk",
+              Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
             },
           }
         );
-        setAppointments(response.data.result);
-        console.log(response.data.result);
+        setAppointments(res.data.result);
+        console.log(res.data.result);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }

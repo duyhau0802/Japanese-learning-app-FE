@@ -1,11 +1,12 @@
-import { Text, View, StyleSheet, ScrollView, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 
 import CourseView from "../components/courseView/courseView";
 import Cartegory from "../components/Category/Category";
 import Teacher from "../components/Teacher/Teacher";
+
 const Course = () => {
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.block}>
         <Text style={styles.header1}>Search</Text>
         <View>
@@ -16,38 +17,38 @@ const Course = () => {
           ></TextInput>
         </View>
       </View>
-      <View></View>
-      <View>
-        <View style={styles.block}>
-          <Text style={styles.header1}>Cartegory</Text>
-          <View style={styles.row}>
-            <Cartegory categoryTitle="N4"></Cartegory>
-            <Cartegory categoryTitle="N4"></Cartegory>
-            <Cartegory categoryTitle="N4"></Cartegory>
-          </View>
-        </View>
 
-        <View style={styles.block}>
-          <Text style={styles.header1}>Course</Text>
-          <View style={styles.row}>
-            <CourseView courseTitle="English" coursePrice="60"></CourseView>
-            <CourseView courseTitle="English" coursePrice="60"></CourseView>
-            <CourseView courseTitle="English" coursePrice="60"></CourseView>
-          </View>
-        </View>
-
-        <View style={styles.block}>
-          <Text style={styles.header1}>Teachers</Text>
-          <View style={styles.row}>
-            <Teacher teacherName="A" coursePrice="60"></Teacher>
-            <Teacher teacherName="B" coursePrice="60"></Teacher>
-            <Teacher teacherName="C" coursePrice="60"></Teacher>
-          </View>
+      {/* Rest of your components */}
+      <View style={styles.block}>
+        <Text style={styles.header1}>Cartegory</Text>
+        <View style={styles.row}>
+          <Cartegory categoryTitle="N4"></Cartegory>
+          <Cartegory categoryTitle="N4"></Cartegory>
+          <Cartegory categoryTitle="N4"></Cartegory>
         </View>
       </View>
-    </ScrollView>
+
+      <View style={styles.block}>
+        <Text style={styles.header1}>Course</Text>
+        <View style={styles.row}>
+          <CourseView courseTitle="English" coursePrice="60"></CourseView>
+          <CourseView courseTitle="English" coursePrice="60"></CourseView>
+          <CourseView courseTitle="English" coursePrice="60"></CourseView>
+        </View>
+      </View>
+
+      <View style={styles.block}>
+        <Text style={styles.header1}>Teachers</Text>
+        <View style={styles.row}>
+          <Teacher teacherName="A" coursePrice="60"></Teacher>
+          <Teacher teacherName="B" coursePrice="60"></Teacher>
+          <Teacher teacherName="C" coursePrice="60"></Teacher>
+        </View>
+      </View>
+    </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,13 +74,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "left",
   },
-
-  // footer: {
-  //   margin: 24,
-  //   fontSize: 18,
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  // },
 });
 
 export default Course;

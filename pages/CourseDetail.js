@@ -24,9 +24,9 @@ const CourseDetailPage = () => {
 
   const getCourse = async () => {
     try {
-      const response = await axios.get("http://localhost:4000/api/course/0");
-      console.log(response.data);
-      setData(response.data);
+      const res = await axios.get("http://54.164.6.175:3000/api/course/0");
+      console.log(res.data);
+      setData(res.data);
     } catch (error) {
       console.error(error);
     }

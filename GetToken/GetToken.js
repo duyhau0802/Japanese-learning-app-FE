@@ -1,17 +1,17 @@
-function GetToken() {
-  const name = "token=";
-  const decodedCookie = decodeURIComponent(document.cookie);
-  const cookieArray = decodedCookie.split(";");
-  for (let i = 0; i < cookieArray.length; i++) {
-    let cookie = cookieArray[i];
-    while (cookie.charAt(0) === " ") {
-      cookie = cookie.substring(1);
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+async function GetToken() {
+  try {
+    const token = await AsyncStorage.getItem("token");
+    if (token !== null) {
+      // Token tồn tại, bạn có thể sử dụng nó cho các yêu cầu API khác
+      return token;
+    } else {
+      console.log("Token not found");
     }
-    if (cookie.indexOf(name) === 0) {
-      return cookie.substring(name.length, cookie.length);
-    }
+  } catch (error) {
+    console.error("Error reading token from AsyncStorage:", error);
   }
-  return "";
 }
 
 export default GetToken;

@@ -8,8 +8,9 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import Toast from "react-native-toast-message";
+
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const LoginScreen = () => {
@@ -19,29 +20,21 @@ const LoginScreen = () => {
 
   const handleLogin = async (email, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/user/login",
-        {
-          email: email.trim(),
-          password: password.trim(),
-        }
-      );
+      const res = await axios.post("http://54.164.6.175:3000/api/user/login", {
+        email: email,
+        password: password,
+      });
+      if (res.data.success === true) {
+        await AsyncStorage.setItem("token", res.data.accessToken);
 
-      if (response.data.success === true) {
-        document.cookie = `token=${response.data.accessToken}`;
         setTimeout(() => {
           navigation.navigate("Home");
-        }, 2000);
+        }, 1000);
       } else {
-        Toast.show({
-          type: "error",
-          position: "top",
-          text1: "Invalid email or password",
-          visibilityTime: 3000,
-        });
+        console.log(res.data);
       }
     } catch (error) {
-      console.error(error);
+      console.log("Login failed:", error.message);
     }
   };
 

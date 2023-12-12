@@ -1,14 +1,17 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, Image, StyleSheet } from "react-native";
 
 const Cartegory = (props) => {
   return (
-    <View style={styles.container} onPress={() => alert('Buy Now button pressed')}>
+    <View
+      style={styles.container}
+      onPress={() => alert("Buy Now button pressed")}
+    >
       <Image
-        source={require('./N4.jpg')} // 
+        source={require("./N4.jpg")} //
         style={styles.categoryImage}
       />
-      <Text style={styles.categoryTitle}>{props.categoryTitle} category</Text>
+      <Text style={styles.catvhegoryTitle}>{props.categoryTitle} category</Text>
     </View>
   );
 };
@@ -16,19 +19,19 @@ const Cartegory = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   categoryImage: {
     width: 100,
     height: 100,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   categoryTitle: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginVertical: 10,
-    marginBottom:0,
+    marginBottom: 0,
   },
 });
 

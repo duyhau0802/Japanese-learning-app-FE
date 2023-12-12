@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import DateTimePicker from "react-native-ui-datepicker";
 import dayjs from "dayjs";
 import axios from "axios";
-import GetToken from "../GetToken/GetToken";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/core";
 
 const SetAppointmentScreen = () => {
@@ -12,8 +12,8 @@ const SetAppointmentScreen = () => {
   const { teacherID } = route.params;
 
   const handleBookAppointment = async () => {
-    const response = await axios.post(
-      "http://localhost:4000/api/appointment/setAppointment",
+    const res = await axios.post(
+      "http://54.164.6.175:3000/api/appointment/setAppointment",
       {
         teacher_id: teacherID,
         start_time: new Date(),
@@ -22,7 +22,7 @@ const SetAppointmentScreen = () => {
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOjEwNywiaWF0IjoxNzAxOTYwMTI1LCJleHAiOjE3MDE5NjM3MjV9.ZiWQujwcPPMi_j8MGToXKAiM31HU8hFmQZkiljbMVZo`,
+          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
         },
       }
     );
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    height: "80vh",
+    height: "auto",
   },
   headerText: {
     fontSize: 24,
