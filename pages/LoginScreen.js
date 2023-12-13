@@ -2,14 +2,16 @@
 
 import React, { useState } from "react";
 import {
+  Alert,
   View,
   Text,
   TextInput,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import Toast from "react-native-toast-message";
+
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const LoginScreen = () => {
@@ -19,32 +21,30 @@ const LoginScreen = () => {
 
   const handleLogin = async (email, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/user/login",
-        {
-          email: email.trim(),
-          password: password.trim(),
-        }
-      );
+      const res = await axios.post("http://54.164.6.175:3000/api/user/login", {
+        email: email,
+        password: password,
+      });
 
-      if (response.data.success === true) {
-        document.cookie = `token=${response.data.accessToken}`;
+      if (res.data.success) {
+        await AsyncStorage.setItem("token", res.data.accessToken);
+        Alert.alert("Login successfully !");
         setTimeout(() => {
-          navigation.navigate("Home");
-        }, 2000);
+          navigation.navigate("CourseDetail");
+        }, 1000);
       } else {
-        Toast.show({
-          type: "error",
-          position: "top",
-          text1: "Invalid email or password",
-          visibilityTime: 3000,
-        });
+        if (res.error.password) {
+          Alert.alert(res.error.password.msg);
+        } else if (res.error.email) {
+          Alert.alert(res.error.email.msg);
+        } else {
+          Alert.alert("An error occurred during login.");
+        }
       }
     } catch (error) {
-      console.error(error);
+      Alert.alert("Login failed, please try again !");
     }
   };
-
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (

@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  ScrollView,
   Image,
   FlatList,
   TouchableOpacity,
@@ -26,11 +25,11 @@ const CoursesList = () => {
 
   useEffect(() => {
     const fetchAPICourseList = async () => {
-      const response = await axios.get(
-        `http://localhost:4000/api/teacher/${teacherID}`
+      const res = await axios.get(
+        `http://54.164.6.175:3000/api/teacher/${teacherID}`
       );
 
-      setCourseList(response.data.courseList);
+      setCourseList(res.data.courseList);
     };
     fetchAPICourseList();
   }, []);
@@ -50,19 +49,17 @@ const CoursesList = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={true}>
-        <FlatList
-          data={
-            showAllCourses && courseList.length > 0
-              ? courseList
-              : courseList.slice(0, 3)
-          }
-          renderItem={renderCourse}
-          keyExtractor={(item) => item.id}
-          horizontal
-          style={{ maxWidth: windowWidth - 25 }} // Set maxWidth to the device's width
-        />
-      </ScrollView>
+      <FlatList
+        data={
+          showAllCourses && courseList.length > 0
+            ? courseList
+            : courseList.slice(0, 3)
+        }
+        renderItem={renderCourse}
+        keyExtractor={(item) => String(item.id)}
+        horizontal
+        style={{ maxWidth: windowWidth - 25 }} // Set maxWidth to the device's width
+      />
 
       {showAllCourses ? (
         <TouchableOpacity
@@ -85,7 +82,6 @@ const CoursesList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // maxWidth:'',
     marginTop: 20,
   },
   courseImage: {
@@ -107,8 +103,7 @@ const styles = StyleSheet.create({
   showButton: {
     margin: 10,
     padding: 10,
-    left: 10,
-    width: 300,
+    width: 373,
     backgroundColor: "lightblue",
     borderRadius: 5,
     alignItems: "center",

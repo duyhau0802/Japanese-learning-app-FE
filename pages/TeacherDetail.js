@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Touchable } from "react-native";
 import CourseList from "../components/CourseList/CourseList";
 import axios from "axios";
 import { useNavigation, useRoute } from "@react-navigation/core";
-import { TouchableOpacity } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 
 const TeacherDetail = () => {
   const navigation = useNavigation();
@@ -12,30 +12,24 @@ const TeacherDetail = () => {
   const [teacherDetail, setTeacherDetail] = useState({});
   useEffect(() => {
     const fetchApiTeacher = async () => {
-      const response = await axios.get(
-        `http://localhost:4000/api/teacher/${teacherID}`
+      const res = await axios.get(
+        `http://54.164.6.175:3000/api/teacher/${teacherID}`
       );
-      setTeacherDetail(response.data.result);
+      setTeacherDetail(res.data.result);
     };
 
     fetchApiTeacher();
   }, []);
-  const teacherInfo = {
-    name: "John Hau",
-    email: "hau@gmail.com",
-    experience: "200",
-    detail_infor:
-      "I am an experienced Japanese teacher with a passion for helping students improve their language skills",
-    image: require("../components/Teacher/teacher.jpg"),
-    jp_level: "N2",
-    createdAt: "23/11/2023",
-  };
 
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <Image
-          source={teacherDetail && teacherDetail.avatar}
+          source={
+            teacherDetail && teacherDetail.avatar
+              ? { uri: teacherDetail.avatar }
+              : require("../components/Teacher/teacher.jpg") // Provide a default image
+          }
           style={styles.teacherImage}
         />
         <View style={styles.col}>
@@ -50,7 +44,9 @@ const TeacherDetail = () => {
         <Text style={styles.phoneSymbol}>✆</Text>
         <Text style={styles.messageSymbol}>💬</Text>
       </View>
-      <View style={styles.h2}>Info</View>
+      <View style={styles.h2}>
+        <Text>Info</Text>
+      </View>
       <View style={styles.row}>
         <View style={styles.col}>
           <Text style={styles.h3}>Japanese level </Text>
@@ -82,6 +78,7 @@ const TeacherDetail = () => {
       <View style={styles.row}>
         <CourseList />
       </View>
+
       <TouchableOpacity
         style={styles.SetAppointmentBtn}
         onPress={() =>
@@ -151,8 +148,6 @@ const styles = StyleSheet.create({
   SetAppointmentBtn: {
     margin: 10,
     padding: 10,
-    left: 10,
-    width: 300,
     backgroundColor: "lightblue",
     borderRadius: 5,
     alignItems: "center",

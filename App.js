@@ -14,7 +14,7 @@ import SetAppoinmentScreen from './pages/SetApointment'
 import CourseDetailScreen from './pages/CourseDetail'
 import UserProfile from './pages/Profile'
 import UserDetailPage from './pages/UserDetailPage'
-import { StripeProvider } from '@stripe/stripe-react-native'
+import CourseDetail from './pages/CourseDetail'
 
 const Stack = createStackNavigator()
 
@@ -33,7 +33,7 @@ function App () {
           }
         }}
       >
-        {/* <Stack.Screen
+        <Stack.Screen
           name='Login'
           component={LoginScreen}
           options={{ title: 'Login' }}
@@ -42,7 +42,7 @@ function App () {
           name='Register'
           component={RegisterScreen}
           options={{ title: 'Register' }}
-        />
+        />                                          
         <Stack.Screen
           name='Home'
           component={HomeScreen}
@@ -67,13 +67,13 @@ function App () {
           name='Call'
           component={CallScreen}
           options={{ title: 'Call' }}
-        /> */}
+        />
           <Stack.Screen
             name='Payment'
             component={PaymentScreen}
             options={{ title: 'Payment' }}
           />
-        {/* <Stack.Screen
+        <Stack.Screen
           name='SetAppointment'
           component={SetAppoinmentScreen}
           options={{ title: 'SetAppointment' }}
@@ -87,9 +87,10 @@ function App () {
           name='UserDetailPage'
           component={UserDetailPage}
           options={{ title: 'User Detail' }}
-        /> */}
+        />
       </Stack.Navigator>
     </NavigationContainer>
+    
   )
 }
 
