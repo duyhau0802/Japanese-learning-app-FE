@@ -33,7 +33,7 @@ function App () {
           }
         }}
       >
-        <Stack.Screen
+        {/* <Stack.Screen
           name='Login'
           component={LoginScreen}
           options={{ title: 'Login' }}
@@ -72,7 +72,7 @@ function App () {
             name='Payment'
             component={PaymentScreen}
             options={{ title: 'Payment' }}
-          />
+          /> */}
         <Stack.Screen
           name='SetAppointment'
           component={SetAppoinmentScreen}

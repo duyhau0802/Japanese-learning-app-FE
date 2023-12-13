@@ -30,7 +30,7 @@ const LoginScreen = () => {
         await AsyncStorage.setItem("token", res.data.accessToken);
         Alert.alert("Login successfully !");
         setTimeout(() => {
-          navigation.navigate("CourseDetail");
+          navigation.navigate("Home");
         }, 1000);
       } else {
         if (res.error.password) {

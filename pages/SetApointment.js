@@ -1,49 +1,83 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import DateTimePicker from "react-native-ui-datepicker";
-import dayjs from "dayjs";
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRoute } from "@react-navigation/core";
+import React, { useState } from 'react';
+import { View, Button, Text, StyleSheet } from 'react-native';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from 'moment';
+import { TouchableOpacity } from 'react-native';
 
-const SetAppointmentScreen = () => {
-  const route = useRoute();
-  const [selectedDate, setSelectedDate] = useState(null);
-  const { teacherID } = route.params;
+const AppointmentScreen = () => {
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [isStartDateTimePickerVisible, setStartDateTimePickerVisibility] = useState(false);
+  const [isEndDateTimePickerVisible, setEndDateTimePickerVisibility] = useState(false);
 
-  const handleBookAppointment = async () => {
-    const res = await axios.post(
-      "http://54.164.6.175:3000/api/appointment/setAppointment",
-      {
-        teacher_id: teacherID,
-        start_time: new Date(),
-        end_time: selectedDate.format("YYYY-MM-DD HH:mm:ss"),
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${await AsyncStorage.getItem("token")}`,
-        },
-      }
-    );
+  const showStartDateTimePicker = () => {
+    setStartDateTimePickerVisibility(true);
+  };
+
+  const hideStartDateTimePicker = () => {
+    setStartDateTimePickerVisibility(false);
+  };
+
+  const showEndDateTimePicker = () => {
+    setEndDateTimePickerVisibility(true);
+  };
+
+  const hideEndDateTimePicker = () => {
+    setEndDateTimePickerVisibility(false);
+  };
+
+  const handleStartDateTimeConfirm = (date) => {
+    setStartDate(date);
+    hideStartDateTimePicker();
+  };
+
+  const handleEndDateTimeConfirm = (date) => {
+    setEndDate(date);
+    hideEndDateTimePicker();
+  };
+
+  const formatDateTime = (dateTime) => {
+    return moment(dateTime).format('MMMM D, YYYY h:mm A');
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>New Appointment</Text>
-      <DateTimePicker
-        value={selectedDate ? selectedDate.toDate() : new Date()}
+      <View style={styles.dateButtonContainer}>
+        <Button title="Select Start Date & Time" onPress={showStartDateTimePicker} />
+        <Text style={styles.dateText}>Start Date: {formatDateTime(startDate)}</Text>
+      </View>
+
+      <View style={styles.dateButtonContainer}>
+        <Button title="Select End Date & Time" onPress={showEndDateTimePicker} />
+        <Text style={styles.dateText}>End Date: {formatDateTime(endDate)}</Text>
+      </View>
+
+      <DateTimePickerModal
+        isVisible={isStartDateTimePickerVisible}
         mode="datetime"
-        is24Hour={true}
-        display="default"
-        onValueChange={(date) => setSelectedDate(dayjs(date))}
+        onConfirm={handleStartDateTimeConfirm}
+        onCancel={hideStartDateTimePicker}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => handleBookAppointment()}
-      >
-        <Text style={styles.buttonText}>Set Appointment</Text>
-      </TouchableOpacity>
+
+      <DateTimePickerModal
+        isVisible={isEndDateTimePickerVisible}
+        mode="datetime"
+        onConfirm={handleEndDateTimeConfirm}
+        onCancel={hideEndDateTimePicker}
+      />
+
+      <View style={styles.createButtonContainer}>
+
+        <TouchableOpacity
+          style={styles.createButtonContainer}
+          onPress={() => {
+            console.log('Start Date:', startDate);
+            console.log('End Date:', endDate);
+          }}
+        >
+          <Text style={styles.createButtonText}>Create Appointment</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -51,29 +85,26 @@ const SetAppointmentScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    height: "auto",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  headerText: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-  },
-  text: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
-  button: {
-    backgroundColor: "blue",
+  dateButtonContainer: {
+    backgroundColor: '#ccc',
+    borderRadius: 8,
     padding: 10,
-    borderRadius: 5,
-    marginTop: 10,
+    marginVertical: 10,
   },
-  buttonText: {
-    color: "white",
-    fontSize: 18,
+  dateText: {
+    marginTop: 5,
+    fontSize: 16,
+    color: '#000',
+  },
+  createButtonContainer: {
+    color: '#000',
+    backgroundColor: 'lightblue',
+    borderRadius: 8,
+    padding: 8,
   },
 });
 
-export default SetAppointmentScreen;
+export default AppointmentScreen;
