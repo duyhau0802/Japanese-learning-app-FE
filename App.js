@@ -16,6 +16,9 @@ import UserProfile from "./pages/Profile";
 import UserDetailPage from "./pages/UserDetailPage";
 import CourseDetail from "./pages/CourseDetail";
 import LessonDetail from "./pages/LessonDetail";
+import MessageListScreen from "./pages/MessageList";
+import MessageDetailScreen from "./pages/MessageDetail";
+import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Stack = createStackNavigator();
 
@@ -90,6 +93,8 @@ function App() {
           options={{ title: "User Detail" }}
         />
         <Stack.Screen name="LessonDetail" component={LessonDetail} />
+        <Stack.Screen name="MessageList" component={MessageListScreen} />
+        <Stack.Screen name="MessageDetail" component={MessageDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
+import { View, Text, Image, StyleSheet, Touchable,ScrollView, ActivityIndicator } from "react-native";
 import CourseList from "../components/CourseList/CourseList";
 import axios from "axios";
 import { useNavigation, useRoute } from "@react-navigation/core";
@@ -87,15 +87,16 @@ const TeacherDetail = () => {
         <View style={styles.row}>
           <CourseList />
         </View>
-
         {/* <TouchableOpacity
           style={styles.SetAppointmentBtn}
-          onPress={() =>
-            navigation.navigate("SetAppointment", { teacherID: teacherID })
-          }
+          onPress={() => {
+            navigation.navigate("SetAppointment", {
+              teacherID: teacherID,
+            });
+          }}
         >
-          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
-            予約を追加する
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+            アポイントメントを設定
           </Text>
         </TouchableOpacity> */}
       </View>
@@ -114,29 +115,27 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   h3: {
-    fontSize: 18,
-    color: "#0961f5",
-    fontWeight: "bold",
-  },
-  h4: {
-    fontSize: 16,
-    fontWeight: "400",
+    fontSize: 12,
     color: "gray",
   },
+  h4: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
   teacherImage: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     borderRadius: 50, // To make it a circle
     margin: 10,
     top: 5,
   },
   teacherName: {
-    fontSize: 20,
+    fontSize: 14,
     fontWeight: "bold",
     marginTop: 20,
   },
   teacherEmail: {
-    fontSize: 15,
+    fontSize: 12,
   },
   phoneSymbol: {
     fontSize: 50,
@@ -163,10 +162,9 @@ const styles = StyleSheet.create({
   SetAppointmentBtn: {
     margin: 10,
     padding: 10,
-    backgroundColor: "#0961f5",
+    backgroundColor: "lightblue",
     borderRadius: 5,
     alignItems: "center",
-    width: 320,
   },
 });
 

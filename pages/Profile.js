@@ -32,6 +32,10 @@ const UserProfile = () => {
     AsyncStorage.setItem("token", "");
   };
 
+  const handleMessage = () => {
+    navigation.navigate("MessageList");
+  }
+
   const handleViewDetail = (user) => {
     navigation.navigate("UserDetailPage", { user });
   };
@@ -74,6 +78,9 @@ const UserProfile = () => {
           >
             プロファイル編集
           </Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => handleMessage()}>
+          <Text style={styles.buttonText}>メッセージ</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => handleLogout()}>
           <Text style={styles.buttonText}>ログアウト</Text>
