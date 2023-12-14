@@ -15,6 +15,8 @@ import CourseDetailScreen from "./pages/CourseDetail";
 import UserProfile from "./pages/Profile";
 import UserDetailPage from "./pages/UserDetailPage";
 import CourseDetail from "./pages/CourseDetail";
+import MessageListScreen from "./pages/MessageList";
+import MessageDetailScreen from "./pages/MessageDetail";
 import { StripeProvider } from '@stripe/stripe-react-native';
 
 const Stack = createStackNavigator();
@@ -26,7 +28,7 @@ function App() {
     >
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Home"
         screenOptions={{
           headerStyle: {
             backgroundColor: "#3498db",
@@ -92,6 +94,8 @@ function App() {
           component={UserDetailPage}
           options={{ title: "User Detail" }}
         />
+        <Stack.Screen name="MessageList" component={MessageListScreen} options={{ title: "メッセージ" }}/>
+        <Stack.Screen name="MessageDetail" component={MessageDetailScreen} options={{ title: "チャット" }}/>
       </Stack.Navigator>
     </NavigationContainer> 
     </StripeProvider>
