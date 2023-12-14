@@ -61,7 +61,7 @@ const LoginScreen = () => {
       <TextInput
         style={styles.input}
         placeholder="Enter your password"
-        secureTextEntry={!isPasswordVisible} // them xem mat khau
+        secureTextEntry={!isPasswordVisible}
         value={password}
         onChangeText={(text) => setPassword(text)}
       />

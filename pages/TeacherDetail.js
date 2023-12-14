@@ -42,7 +42,6 @@ const TeacherDetail = () => {
           </Text>
         </View>
         <Text style={styles.phoneSymbol}>✆</Text>
-        <Text style={styles.messageSymbol}>💬</Text>
       </View>
       <View style={styles.h2}>
         <Text>Info</Text>

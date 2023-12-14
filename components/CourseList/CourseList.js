@@ -40,7 +40,10 @@ const CoursesList = () => {
       onPress={() => handleCourseDetail(item)}
     >
       <Image source={require("./OIP.jpg")} style={styles.courseImage} />
-      <Text>{item && item.title}</Text>
+      <Text style={{ maxWidth: 100, flexWrap: "wrap" }}>
+        {item && item.title}
+      </Text>
+
       <Text style={styles.coursePrice}>{item && item.price}</Text>
     </TouchableOpacity>
   );

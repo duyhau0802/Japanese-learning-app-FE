@@ -8,7 +8,9 @@ import {
   Button,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
 
 const RegisterScreen = () => {
@@ -36,16 +38,19 @@ const RegisterScreen = () => {
       });
       const data = await res.json();
       if (data.success === true) {
+        Alert.alert("Register successfully !");
         setTimeout(() => {
           navigation.navigate("Login");
         }, 2000);
       } else {
+        // Handle unsuccessful registration
       }
     } catch (error) {
-      // Xử lý lỗi đăng ký
-      console.error(error);
+      // Handle registration error
+      Alert.alert("Please try again !");
     }
   };
+  console.log(role);
 
   return (
     <View style={styles.container}>
@@ -77,12 +82,19 @@ const RegisterScreen = () => {
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your role"
-        value={role}
-        onChangeText={(text) => setRole(text)}
-      />
+      <Picker
+        style={{
+          width: "100%",
+          height: 150,
+          borderRadius: 20,
+          marginBottom: 30,
+        }}
+        selectedValue={role}
+        onValueChange={(itemValue, itemIndex) => setRole(itemValue)}
+      >
+        <Picker.Item label="Student" value="student" />
+        <Picker.Item label="Teacher" value="teacher" />
+      </Picker>
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
@@ -125,6 +137,14 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 20,
     color: "#4d382c", // Màu chữ nâu đậm
+  },
+  picker: {
+    height: 150,
+    borderColor: "gray",
+    borderWidth: 1,
+    width: "100%",
+    marginBottom: 10,
+    overflow: "hidden", // Hide any content that overflows the border
   },
   button: {
     backgroundColor: "#0961f5", // Màu nền xanh dương cho nút

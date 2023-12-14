@@ -158,25 +158,6 @@ const HomeScreen = () => {
             />
           )}
         </View>
-        <View>
-          <View style={styles.block}>
-            <Text style={styles.header1}>Cartegory</Text>
-            <View style={styles.row}>
-              <Cartegory
-                categoryTitle="N4"
-                style={styles.categoryItem}
-              ></Cartegory>
-              <Cartegory
-                categoryTitle="N4"
-                style={styles.categoryItem}
-              ></Cartegory>
-              <Cartegory
-                categoryTitle="N4"
-                style={styles.categoryItem}
-              ></Cartegory>
-            </View>
-          </View>
-        </View>
         <FlatList
           data={searchKeyword ? [] : data}
           keyExtractor={(teacher) => teacher.id.toString()}
