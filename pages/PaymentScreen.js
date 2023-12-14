@@ -12,8 +12,8 @@ import axios from 'axios'
 
 const PaymentScreen = () => {
   const [paymentMethod, setPaymentMethod] = useState('creditCard')
-  // const [firstName, setFirstName] = useState('')
-  // const [lastName, setLastName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
   const [cardNumber, setCardNumber] = useState('')
   const [expiryDate, setExpiryDate] = useState('')
   const [cvc, setCvc] = useState('')
@@ -43,14 +43,14 @@ const PaymentScreen = () => {
       alert('Payment failed!')
     }
     // Handle payment logic here (e.g., send data to server, confirm payment, ...)
-    // console.log('Payment information:', {
-    //   paymentMethod,
-    //   firstName,
-    //   lastName,
-    //   cardNumber,
-    //   expiryDate,
-    //   cvc
-    // })
+    console.log('Payment information:', {
+      paymentMethod,
+      firstName,
+      lastName,
+      cardNumber,
+      expiryDate,
+      cvc
+    })
   }
 
   return (

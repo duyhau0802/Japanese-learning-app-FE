@@ -57,7 +57,7 @@ function App () {
           name='Appointment'
           component={AppointmentScreen}
           options={{ title: 'Appointment' }}
-        />
+        /> */}
         <Stack.Screen
           name='CourseDetail'
           component={CourseDetailScreen}
@@ -72,7 +72,7 @@ function App () {
             name='Payment'
             component={PaymentScreen}
             options={{ title: 'Payment' }}
-          /> */}
+          />
         <Stack.Screen
           name='SetAppointment'
           component={SetAppoinmentScreen}
