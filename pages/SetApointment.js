@@ -37,7 +37,7 @@ const AppointmentScreen = () => {
         }
       );
       Alert.alert("無事に予約を取る !");
-      navigation.navigate("Home");
+      navigation.navigate("Home", { isUserLoggedIn: true });
     } else {
       Alert.alert("もう一度試してください !");
     }

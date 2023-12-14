@@ -15,18 +15,15 @@ import CourseDetailScreen from "./pages/CourseDetail";
 import UserProfile from "./pages/Profile";
 import UserDetailPage from "./pages/UserDetailPage";
 import CourseDetail from "./pages/CourseDetail";
-import { StripeProvider } from '@stripe/stripe-react-native';
+import LessonDetail from "./pages/LessonDetail";
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
-    <StripeProvider
-      publishableKey="pk_test_51NjI35LtxMLrCM1HD7CEKdUcAweXpoBrlB65gB1n5fOSSeZu4geOn0jVzWuw5HyjA3X0DegLliOETdfXqm8CxSEM00DriZDctr"
-    >
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="Home"
         screenOptions={{
           headerStyle: {
             backgroundColor: "#3498db",
@@ -92,9 +89,9 @@ function App() {
           component={UserDetailPage}
           options={{ title: "User Detail" }}
         />
+        <Stack.Screen name="LessonDetail" component={LessonDetail} />
       </Stack.Navigator>
-    </NavigationContainer> 
-    </StripeProvider>
+    </NavigationContainer>
   );
 }
 

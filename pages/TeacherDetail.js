@@ -88,7 +88,7 @@ const TeacherDetail = () => {
           <CourseList />
         </View>
 
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.SetAppointmentBtn}
           onPress={() =>
             navigation.navigate("SetAppointment", { teacherID: teacherID })
@@ -97,7 +97,7 @@ const TeacherDetail = () => {
           <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
             予約を追加する
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       )}
     </ScrollView>
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   phoneSymbol: {
-    fontSize: 70,
+    fontSize: 50,
     margin: 8,
   },
   messageSymbol: {

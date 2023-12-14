@@ -28,7 +28,7 @@ const UserProfile = () => {
     getCurrentUser();
   }, []);
   const handleLogout = () => {
-    navigation.navigate("Home");
+    navigation.navigate("Home", { isUserLoggedIn: false });
     AsyncStorage.setItem("token", "");
   };
 

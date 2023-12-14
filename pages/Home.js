@@ -12,17 +12,19 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import axios from "axios";
 
 import Cartegory from "../components/Category/Category";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = () => {
+  const route = useRoute();
+  const { isUserLoggedIn } = route.params ? route.params : false;
   const navigation = useNavigation();
   const [searchKeyword, setSearchKeyword] = useState("");
   const [data, setData] = useState([]);
   const [dataSearch, setDataSearch] = useState([]);
   const [filteredTeachers, setFilteredTeachers] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(isUserLoggedIn);
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -123,7 +125,7 @@ const HomeScreen = () => {
                 justifyContent: "center",
               }}
             >
-              {isLogin ? (
+              {isUserLoggedIn ? (
                 <View>
                   <TouchableOpacity
                     onPress={() => handleViewProfile(currentUser)}
@@ -134,7 +136,7 @@ const HomeScreen = () => {
                           currentUser.avatar === ""
                             ? "https://i.pinimg.com/564x/e6/4b/ec/e64beca1b9921925b59671bbf74b9837.jpg"
                             : currentUser.avatar,
-                      }} // Đường dẫn đến avatar của currentUser
+                      }}
                       style={styles.currentUserAvatar}
                     />
                   </TouchableOpacity>

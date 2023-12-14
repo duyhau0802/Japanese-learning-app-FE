@@ -18,6 +18,7 @@ const CourseDetail = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { courseID } = route.params;
+  const { teacherID } = route.params;
   const [currentTab, setCurrentTab] = useState("about");
   const [courseDetail, setCourseDetail] = useState([]);
   const [lessonList, setLessonList] = useState([]);
@@ -38,7 +39,7 @@ const CourseDetail = () => {
   const renderContent = () => {
     switch (currentTab) {
       case "about":
-        return <AboutScreen courseData={courseDetail} />;
+        return <AboutScreen courseData={courseDetail} teacherID={teacherID}/>;
       case "lesson":
         return <LessonScreen lessonList={lessonList}/>;
       case "review":

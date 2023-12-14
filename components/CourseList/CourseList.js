@@ -22,7 +22,7 @@ const CoursesList = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleCourseDetail = (course) => {
-    navigation.navigate("CourseDetail", { courseID: course.id });
+    navigation.navigate("CourseDetail", { courseID: course.id, teacherID: teacherID });
   };
 
   useEffect(() => {
