@@ -14,21 +14,6 @@ const CourseDetail = () => {
   const [currentTab, setCurrentTab] = useState("about");
   const [courseDetail, setCourseDetail] = useState([]);
 
-  const courseData = {
-    title: "Japanese Language Course",
-    rating: 4.5,
-    description: "This is a comprehensive Japanese language course.",
-    instructor: {
-      name: "John Doe",
-      avatar:
-        "https://i.pinimg.com/564x/95/31/4c/95314cf75cae13c00f709e87f4d973af.jpg",
-      japaneseLevel: "N2",
-      experience: "5 years",
-      dob: "January 1, 1980",
-    },
-    price: 99.99,
-  };
-
   useEffect(() => {
     const fetchApiCourseDetail = async () => {
       const res = await axios.get(
@@ -73,21 +58,21 @@ const CourseDetail = () => {
           <Text
             style={{ fontWeight: currentTab === "about" ? "bold" : "normal" }}
           >
-            About
+            情報
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setCurrentTab("lesson")}>
           <Text
             style={{ fontWeight: currentTab === "lesson" ? "bold" : "normal" }}
           >
-            Lesson
+            レッスン
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setCurrentTab("review")}>
           <Text
             style={{ fontWeight: currentTab === "review" ? "bold" : "normal" }}
           >
-            Review
+            レビュー
           </Text>
         </TouchableOpacity>
       </View>

@@ -5,8 +5,11 @@ import moment from "moment";
 import { TouchableOpacity } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRoute } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const AppointmentScreen = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const { teacherID } = route.params;
   const [startDate, setStartDate] = useState(new Date());
@@ -17,6 +20,7 @@ const AppointmentScreen = () => {
     useState(false);
 
   const handleCreateAppointment = async () => {
+    console.log(startDate, endDate);
     if (startDate < endDate) {
       const res = await axios.post(
         "http://54.164.6.175:3000/api/appointment/setAppointment",
@@ -32,8 +36,10 @@ const AppointmentScreen = () => {
           },
         }
       );
+      Alert.alert("無事に予約を取る !");
+      navigation.navigate("Home");
     } else {
-      Alert.alert("Please try again !");
+      Alert.alert("もう一度試してください !");
     }
   };
 
@@ -75,13 +81,8 @@ const AppointmentScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.dateButtonContainer}>
-        <Button
-          title="Select Start Date & Time"
-          onPress={showStartDateTimePicker}
-        />
-        <Text style={styles.dateText}>
-          Start Date: {formatDateTime(startDate)}
-        </Text>
+        <Button title="開始日時の選択" onPress={showStartDateTimePicker} />
+        <Text style={styles.dateText}>開始日: {formatDateTime(startDate)}</Text>
       </View>
 
       <DateTimePickerModal
@@ -94,10 +95,10 @@ const AppointmentScreen = () => {
 
       <View style={styles.dateButtonContainer}>
         <Button
-          title="Select End Date & Time"
+          title="終了日時を選択してください"
           onPress={showEndDateTimePicker}
         />
-        <Text style={styles.dateText}>End Date: {formatDateTime(endDate)}</Text>
+        <Text style={styles.dateText}>終了日: {formatDateTime(endDate)}</Text>
       </View>
 
       <DateTimePickerModal
@@ -115,7 +116,15 @@ const AppointmentScreen = () => {
             handleCreateAppointment();
           }}
         >
-          <Text style={styles.createButtonText}>Create Appointment</Text>
+          <Text
+            style={{
+              color: "white",
+              fontSize: 18,
+              fontWeight: "bold",
+            }}
+          >
+            予約の作成
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -129,19 +138,28 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   dateButtonContainer: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#EEF5FF",
     borderRadius: 8,
     padding: 10,
     marginVertical: 10,
+    borderRadius: 10,
+    shadowColor: "#808080",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 5,
+    margin: 10,
   },
   dateText: {
     marginTop: 5,
-    fontSize: 16,
+    fontSize: 18,
     color: "#000",
   },
   createButtonContainer: {
-    color: "#000",
-    backgroundColor: "lightblue",
+    backgroundColor: "#4CB9E7",
     borderRadius: 8,
     padding: 8,
   },

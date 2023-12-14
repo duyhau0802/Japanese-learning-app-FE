@@ -46,23 +46,40 @@ const Appointment = () => {
     let status = "";
 
     if (currentDateTime.isBefore(startDateTime, "second")) {
-      status = "Chưa bắt đầu";
+      status = "まだ始まっていない";
     } else if (
       currentDateTime.isBetween(startDateTime, endDateTime, "second")
     ) {
-      status = "Đang diễn ra";
+      status = "起こっていること";
     } else if (currentDateTime.isAfter(endDateTime, "second")) {
-      status = "Đã quá hạn";
+      status = "期限切れ";
     }
     const statusColors = {
-      "Chưa bắt đầu": "green",
-      "Đang diễn ra": "blue",
-      "Đã quá hạn": "red",
+      まだ始まっていない: "green",
+      起こっていること: "blue",
+      期限切れ: "red",
     };
     return (
-      <View style={[styles.card, { backgroundColor: item.backgroundColor }]}>
+      <View
+        style={[
+          styles.card,
+          {
+            backgroundColor: "white",
+            borderRadius: 20,
+            shadowColor: "#808080",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.5,
+            shadowRadius: 4,
+            elevation: 5,
+            marginTop: 10,
+          },
+        ]}
+      >
         <Text style={[styles.cardTitle, { color: item.titleColor }]}>
-          Teacher name:{" "}
+          教師の名前:{" "}
           {item.Teacher.User.first_name + " " + item.Teacher.User.last_name}
         </Text>
         <Text
@@ -76,12 +93,12 @@ const Appointment = () => {
         </Text>
         <View style={styles.cardDates}>
           <Text style={styles.cardDate}>
-            Start: {startDateTime.format("YYYY-MM-DD HH:mm:ss")}
+            始める: {startDateTime.format("YYYY-MM-DD HH:mm:ss")}
           </Text>
         </View>
         <View style={styles.cardDates}>
           <Text style={styles.cardDate}>
-            End: {endDateTime.format("YYYY-MM-DD HH:mm:ss")}
+            終わる: {endDateTime.format("YYYY-MM-DD HH:mm:ss")}
           </Text>
         </View>
         <View style={styles.cardContent}>
@@ -90,10 +107,7 @@ const Appointment = () => {
               style={styles.actionButton}
               onPress={() => navigation.navigate("Call")}
             >
-              <Text style={styles.buttonText}>Call</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton}>
-              <Text style={styles.buttonText}>Video</Text>
+              <Text style={styles.buttonText}>電話</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -113,7 +127,7 @@ const Appointment = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Enrolled Course Appointments</Text>
+      <Text style={styles.title}>登録済みのコースの予約</Text>
       <TextInput
         style={styles.searchInput}
         placeholder="Search"

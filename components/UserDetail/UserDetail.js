@@ -1,6 +1,14 @@
 // UserProfileDetail.js
 import React from "react";
-import { View, Image, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  TextInput,
+  Text,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { axios } from "axios";
 
 const UserDetail = ({ user }) => {
@@ -20,8 +28,23 @@ const UserDetail = ({ user }) => {
         value={`${user.first_name} ${user.last_name}`}
       />
       <TextInput style={styles.email} value={user.mail} />
-      <TextInput style={styles.role} value={user.role} />
-      <Button title="Update" onPress={() => handleUpdate(user)} />
+      <TextInput
+        style={styles.role}
+        value={user.role === "student" ? "学生" : "教師"}
+      />
+      <TouchableOpacity
+        style={{
+          margin: 10,
+          padding: 10,
+          backgroundColor: "#0961f5",
+          borderRadius: 5,
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
+          アップデート
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -37,9 +60,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 150,
+    height: 150,
+    borderRadius: 150,
     marginBottom: 20,
   },
   name: {

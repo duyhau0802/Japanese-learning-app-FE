@@ -25,13 +25,16 @@ const UserProfile = () => {
     };
     getCurrentUser();
   }, []);
+  const handleLogout = () => {
+    navigation.navigate("Home");
+    AsyncStorage.setItem("token", "");
+  };
 
   const handleViewDetail = (user) => {
     navigation.navigate("UserDetailPage", { user });
   };
   return (
     <View style={{ padding: 20, width: "auto" }}>
-      <Text style={{ fontSize: 24, fontWeight: "bold" }}>Account</Text>
       <Image
         source={{
           uri:
@@ -40,36 +43,33 @@ const UserProfile = () => {
               : "https://i.pinimg.com/564x/e6/4b/ec/e64beca1b9921925b59671bbf74b9837.jpg",
         }}
         style={{
-          width: 100,
-          height: 100,
-          borderRadius: 50,
+          width: 150,
+          height: 150,
+          borderRadius: 1000,
           marginBottom: 20,
           alignSelf: "center",
         }}
       />
 
       <Text style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}>
-        {currentUser.first_name}
+        {currentUser.first_name + " " + currentUser.last_name}
       </Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("Appointment")}
       >
-        <Text style={styles.buttonText}>Appointment</Text>
+        <Text style={styles.buttonText}>予約</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <Text
           style={styles.buttonText}
           onPress={() => handleViewDetail(currentUser)}
         >
-          Edit Profile
+          プロファイル編集
         </Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Settings and Privacy</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Help</Text>
+      <TouchableOpacity style={styles.button} onPress={() => handleLogout()}>
+        <Text style={styles.buttonText}>ログアウト</Text>
       </TouchableOpacity>
     </View>
   );
@@ -85,6 +85,8 @@ const styles = {
   buttonText: {
     color: "#fff",
     textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
   },
 };
 

@@ -22,6 +22,7 @@ const HomeScreen = () => {
   const [dataSearch, setDataSearch] = useState([]);
   const [filteredTeachers, setFilteredTeachers] = useState([]);
   const [currentUser, setCurrentUser] = useState([]);
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -34,8 +35,17 @@ const HomeScreen = () => {
             },
           }
         );
-        setCurrentUser(res.data.user);
+        const token = await AsyncStorage.getItem("token");
+        console.log(token);
+        if (res.data.success === true) {
+          setIsLogin(true);
+          setCurrentUser(res.data.user);
+        } else {
+          setIsLogin(false);
+          setCurrentUser([]);
+        }
       } catch (error) {
+        setIsLogin(false);
         console.error(error.message);
       }
     };
@@ -84,7 +94,6 @@ const HomeScreen = () => {
   }, [searchKeyword, dataSearch]);
   const handleViewProfile = (user) => {
     // Thực hiện chuyển hướng đến trang profile với thông tin của user
-    console.log(`View profile for ${user.first_name} ${user.last_name}`);
     navigation.navigate("UserProfile", { user });
   };
 
@@ -100,7 +109,7 @@ const HomeScreen = () => {
             }}
           >
             <View>
-              <Text style={styles.subTitle}>Let's start learning</Text>
+              <Text style={styles.subTitle}>学習を始めましょう</Text>
             </View>
             <View
               style={{
@@ -110,24 +119,46 @@ const HomeScreen = () => {
                 justifyContent: "center",
               }}
             >
-              <TouchableOpacity onPress={() => handleViewProfile(currentUser)}>
-                <Image
-                  source={{
-                    uri:
-                      currentUser.avatar === ""
-                        ? "https://i.pinimg.com/564x/e6/4b/ec/e64beca1b9921925b59671bbf74b9837.jpg"
-                        : currentUser.avatar,
-                  }} // Đường dẫn đến avatar của currentUser
-                  style={styles.currentUserAvatar}
-                />
-              </TouchableOpacity>
-              <Text style={styles.title}>{currentUser.first_name}</Text>
+              {isLogin ? (
+                <View>
+                  <TouchableOpacity
+                    onPress={() => handleViewProfile(currentUser)}
+                  >
+                    <Image
+                      source={{
+                        uri:
+                          currentUser.avatar === ""
+                            ? "https://i.pinimg.com/564x/e6/4b/ec/e64beca1b9921925b59671bbf74b9837.jpg"
+                            : currentUser.avatar,
+                      }} // Đường dẫn đến avatar của currentUser
+                      style={styles.currentUserAvatar}
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.title}>{currentUser.first_name}</Text>
+                </View>
+              ) : (
+                <View>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Login")}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: "white",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Login
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
             </View>
           </View>
           <View style={styles.search}>
             <Icon name="bell" size={24} color="black" style={styles.icon} />
             <TextInput
-              placeholder="Search"
+              placeholder="探す。。。"
               style={styles.searchInput}
               onChangeText={(text) => setSearchKeyword(text)}
             />
@@ -177,7 +208,15 @@ const HomeScreen = () => {
                 onPress={() => handleViewDetail(item)}
                 style={styles.detailButton}
               >
-                <Text style={styles.buttonText}>View Detail</Text>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    color: "white",
+                  }}
+                >
+                  詳細を見る
+                </Text>
               </TouchableOpacity>
             </View>
           )}
@@ -198,7 +237,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 150,
-    backgroundColor: "#1640D6",
+    backgroundColor: "#0961f5",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -235,8 +274,10 @@ const styles = StyleSheet.create({
     color: "white",
   },
   subTitle: {
-    fontSize: 16,
+    fontSize: 24,
+    fontWeight: "bold",
     color: "white",
+    marginTop: 10,
   },
   search: {
     marginTop: 20,
@@ -244,6 +285,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    color: "black",
   },
   icon: {
     marginRight: 10,
@@ -251,21 +293,32 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     width: 300,
-    height: 30,
+    height: 50,
     borderWidth: 1,
     borderColor: "gray",
     borderRadius: 5,
     paddingLeft: 10,
-    color: "white",
+    color: "black",
+    backgroundColor: "white",
+    fontSize: 18,
   },
   content: {
     flex: 1,
     padding: 10,
   },
   teacherItem: {
+    backgroundColor: "#fff",
     padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    borderRadius: 10,
+    shadowColor: "#808080",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 5,
+    margin: 10,
   },
   teacherName: {
     fontSize: 18,
@@ -287,10 +340,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   detailButton: {
-    backgroundColor: "blue",
+    backgroundColor: "#4CB9E7",
     borderRadius: 5,
     padding: 5,
     marginTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
   filterButton: {
     backgroundColor: "green",
@@ -303,9 +358,8 @@ const styles = StyleSheet.create({
     color: "white",
   },
   searchResult: {
-    maxHeight: 200, // Điều chỉnh độ cao tối đa
+    maxHeight: 200,
     backgroundColor: "white",
-    padding: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
   },

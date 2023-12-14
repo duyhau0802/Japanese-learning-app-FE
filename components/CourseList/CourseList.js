@@ -40,7 +40,13 @@ const CoursesList = () => {
       onPress={() => handleCourseDetail(item)}
     >
       <Image source={require("./OIP.jpg")} style={styles.courseImage} />
-      <Text style={{ maxWidth: 100, flexWrap: "wrap" }}>
+      <Text
+        style={{
+          maxWidth: 100,
+          flexWrap: "wrap",
+          padding: 5,
+        }}
+      >
         {item && item.title}
       </Text>
 
@@ -69,14 +75,18 @@ const CoursesList = () => {
           style={styles.showButton}
           onPress={() => setShowAllCourses(false)}
         >
-          <Text>Show Less Courses</Text>
+          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
+            コースの表示を減らす
+          </Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
           style={styles.showButton}
           onPress={() => setShowAllCourses(true)}
         >
-          <Text>Show More Courses</Text>
+          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
+            さらにコースを表示する
+          </Text>
         </TouchableOpacity>
       )}
     </View>
@@ -88,14 +98,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   courseImage: {
-    width: 100,
-    height: 100,
+    width: 120,
+    height: 120,
     resizeMode: "cover",
     marginBottom: 5,
   },
   coursePrice: {
     color: "green",
     fontWeight: "bold",
+    padding: 5,
   },
   courseItem: {
     margin: 5,
@@ -107,7 +118,7 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
     width: 373,
-    backgroundColor: "lightblue",
+    backgroundColor: "#4CB9E7",
     borderRadius: 5,
     alignItems: "center",
   },

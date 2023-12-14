@@ -22,9 +22,6 @@ const PaymentScreen = () => {
   const route = useRoute();
   const { price } = route.params;
 
-  let amount = 55000;
-  let course = "Kaiwa basic";
-
   const handlePayment = async () => {
     try {
       const res = await axios.post(
@@ -58,10 +55,12 @@ const PaymentScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Course Payment</Text>
-        <View style={{ margin: 10 }}>
-          <Text style={{ fontSize: 18, fontWeight: 500 }}>Price:</Text>
-          <Text style={{ fontSize: 18, color: "red" }}>{price}</Text>
+        <Text style={styles.title}>コースのお支払い</Text>
+        <View style={{ margin: 10, display: "flex", flexDirection: "row" }}>
+          <Text style={{ fontSize: 30, fontWeight: 500 }}>価格:</Text>
+          <Text style={{ fontSize: 30, color: "red", marginLeft: 10 }}>
+            $ {price}
+          </Text>
         </View>
 
         <View style={styles.radioContainer}>
@@ -74,7 +73,16 @@ const PaymentScreen = () => {
                 <View style={styles.selectedRadioCircle} />
               )}
             </View>
-            <Text>Offline</Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "#3559E0",
+                fontWeight: "bold",
+                marginLeft: 5,
+              }}
+            >
+              オフライン
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -86,7 +94,16 @@ const PaymentScreen = () => {
                 <View style={styles.selectedRadioCircle} />
               )}
             </View>
-            <Text>PayPal</Text>
+            <Text
+              style={{
+                fontSize: 20,
+                color: "#3559E0",
+                fontWeight: "bold",
+                marginLeft: 5,
+              }}
+            >
+              PayPal
+            </Text>
           </TouchableOpacity>
         </View>
 
@@ -152,7 +169,19 @@ const PaymentScreen = () => {
             />
           </>
         )}
-        <Button title="Pay" onPress={handlePayment} />
+        <TouchableOpacity
+          style={{
+            padding: 10,
+            backgroundColor: "#0961f5",
+            borderRadius: 5,
+            alignItems: "center",
+          }}
+          onPress={() => handlePayment()}
+        >
+          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
+            Pay
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -163,13 +192,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 25,
+    borderWidth: 2,
+    marginHorizontal: 40,
+    marginVertical: 150,
+    borderRadius: 30,
     borderColor: "#3498db",
-    borderRadius: 5,
   },
-  content: {},
+  content: {
+    borderRadius: 20,
+  },
   title: {
-    fontSize: 20,
+    fontSize: 40,
     fontWeight: "bold",
     marginBottom: 20,
   },
@@ -204,7 +237,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
-    width: 250,
+    width: "auto",
   },
 });
 

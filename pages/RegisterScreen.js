@@ -43,7 +43,7 @@ const RegisterScreen = () => {
           navigation.navigate("Login");
         }, 2000);
       } else {
-        // Handle unsuccessful registration
+        Alert.alert("Please try again !");
       }
     } catch (error) {
       // Handle registration error
