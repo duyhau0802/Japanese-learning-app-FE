@@ -6,7 +6,13 @@ import endIcon from '../assets/CallScreen/endCall.png';
 import micIcon from '../assets/CallScreen/mic.png';
 import cameraIcon from '../assets/CallScreen/camera.png';
 
-const CallScreen = ({ callerName = "Hau", onEndCall, onMuteHeadphone, onMuteMic, onToggleCamera, onOpenChat }) => {
+const CallScreen = ({ route }) => {
+  const { callerName } = route.params;
+  const onMuteHeadphone = () => {};
+  const onMuteMic = () => {};
+  const onEndCall = () => {};
+  const onToggleCamera = () => {};
+  const onOpenChat = () => {};
   return (
     <View style={styles.container}>
         <View style={styles.callScreen}>
@@ -60,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor:"white",  // màu nền màu trắng
   },
   callScreen : {
-    height:520,
+    height:570,
     width:350,
     borderRadius:50,
     justifyContent: 'center',

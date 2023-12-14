@@ -1,12 +1,18 @@
 // App.js
 import React, { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet } from "react-native";
+import {
+  SafeAreaView,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+} from "react-native";
 import UserDetail from "./../components/UserDetail/UserDetail";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const UserDetailPage = () => {
   const [currentUser, setCurrentUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const getCurrentUser = async () => {
       try {
@@ -19,6 +25,7 @@ const UserDetailPage = () => {
           }
         );
         setCurrentUser(res.data.user);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -27,7 +34,20 @@ const UserDetailPage = () => {
   }, []);
   return (
     <SafeAreaView style={styles.container}>
-      <UserDetail user={currentUser} />
+      {isLoading ? (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 50,
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      ) : (
+        <UserDetail user={currentUser} />
+      )}
     </SafeAreaView>
   );
 };

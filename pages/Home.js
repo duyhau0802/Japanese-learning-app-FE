@@ -36,7 +36,7 @@ const HomeScreen = () => {
           }
         );
         const token = await AsyncStorage.getItem("token");
-        console.log(token);
+        console.log("Token",token);
         if (res.data.success === true) {
           setIsLogin(true);
           setCurrentUser(res.data.user);
@@ -46,7 +46,7 @@ const HomeScreen = () => {
         }
       } catch (error) {
         setIsLogin(false);
-        console.error(error.message);
+        // console.error(error.message);
       }
     };
     getCurrentUser();
@@ -82,16 +82,20 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (searchKeyword) {
-      const filtered = dataSearch.filter((teacher) =>
-        (teacher.first_name + " " + teacher.last_name)
-          .toLowerCase()
-          .includes(searchKeyword.toLowerCase())
-      );
+      const filtered = dataSearch.filter((teacher) => {
+        const fullName = `${teacher.first_name} ${teacher.last_name}`.toLowerCase();
+        const level = teacher.Teacher_Detail.jp_level.toLowerCase();
+  
+        // Check if the searchKeyword matches either name or level
+        return fullName.includes(searchKeyword.toLowerCase()) || level.includes(searchKeyword.toLowerCase());
+      });
+  
       setFilteredTeachers(filtered);
     } else {
       setFilteredTeachers([]);
     }
   }, [searchKeyword, dataSearch]);
+  
   const handleViewProfile = (user) => {
     // Thực hiện chuyển hướng đến trang profile với thông tin của user
     navigation.navigate("UserProfile", { user });
@@ -200,10 +204,11 @@ const HomeScreen = () => {
                   {item.first_name + " " + item.last_name}
                 </Text>
               </View>
-              <Text style={styles.teacherAge}>Email: {item.mail}</Text>
+              <Text style={styles.teacherAge}>日本語のレベル: {item.Teacher_Detail.jp_level}</Text>
+              {/* <Text style={styles.teacherAge}>Email: {item.mail}</Text>
               <Text style={styles.teacherAddress}>
                 Gender: {item.gender === "0" ? "Male" : "Female"}
-              </Text>
+              </Text> */}
               <TouchableOpacity
                 onPress={() => handleViewDetail(item)}
                 style={styles.detailButton}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import CourseList from "../components/CourseList/CourseList";
 import axios from "axios";
 import { useNavigation, useRoute } from "@react-navigation/core";
@@ -10,12 +10,14 @@ const TeacherDetail = () => {
   const route = useRoute();
   const { teacherID } = route.params;
   const [teacherDetail, setTeacherDetail] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchApiTeacher = async () => {
       const res = await axios.get(
         `http://54.164.6.175:3000/api/teacher/${teacherID}`
       );
       setTeacherDetail(res.data.result);
+      setIsLoading(false);
     };
 
     fetchApiTeacher();
@@ -23,6 +25,11 @@ const TeacherDetail = () => {
 
   return (
     <ScrollView>
+      {isLoading ? (
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", marginTop:50 }}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      ) : (
       <View style={styles.container}>
         <View style={styles.row}>
           <Image
@@ -92,6 +99,7 @@ const TeacherDetail = () => {
           </Text>
         </TouchableOpacity>
       </View>
+      )}
     </ScrollView>
   );
 };
@@ -158,6 +166,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0961f5",
     borderRadius: 5,
     alignItems: "center",
+    width: 320,
   },
 });
 

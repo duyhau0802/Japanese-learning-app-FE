@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
@@ -16,6 +17,7 @@ const Appointment = () => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState("");
   const [appointments, setAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchAPIAppointment = async () => {
@@ -29,7 +31,7 @@ const Appointment = () => {
           }
         );
         setAppointments(res.data.result);
-        console.log(res.data.result);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -37,6 +39,12 @@ const Appointment = () => {
 
     fetchAPIAppointment();
   }, []);
+
+  const handleNavigation = (callerName) => {
+    navigation.navigate("Call", {
+      callerName: callerName,
+    });
+  };
 
   const renderAppointmentCard = ({ item }) => {
     const currentDateTime = moment();
@@ -105,7 +113,7 @@ const Appointment = () => {
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.actionButton}
-              onPress={() => navigation.navigate("Call")}
+              onPress={() => handleNavigation(item.Teacher.User.first_name + " " + item.Teacher.User.last_name)}
             >
               <Text style={styles.buttonText}>電話</Text>
             </TouchableOpacity>
@@ -134,12 +142,25 @@ const Appointment = () => {
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
-      <FlatList
-        contentContainerStyle={styles.listContainer}
-        data={appointments.filter(searchFilter)}
-        renderItem={renderAppointmentCard}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      {isLoading ? (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 50,
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.listContainer}
+          data={appointments.filter(searchFilter)}
+          renderItem={renderAppointmentCard}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      )}
     </View>
   );
 };
@@ -148,7 +169,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    paddingTop: 60,
+    paddingTop: 20,
   },
   listContainer: {
     paddingHorizontal: 10,
@@ -194,14 +215,16 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     marginTop: 15,
-    backgroundColor: "#DCDCDC",
+    backgroundColor: "#4CB9E7",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
     marginRight: 10,
   },
   buttonText: {
-    color: "#00008B",
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 18,
   },
   highlightedText: {
     fontWeight: "bold",

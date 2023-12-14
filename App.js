@@ -15,6 +15,7 @@ import CourseDetailScreen from "./pages/CourseDetail";
 import UserProfile from "./pages/Profile";
 import UserDetailPage from "./pages/UserDetailPage";
 import CourseDetail from "./pages/CourseDetail";
+import LessonDetail from "./pages/LessonDetail";
 
 const Stack = createStackNavigator();
 
@@ -88,6 +89,7 @@ function App() {
           component={UserDetailPage}
           options={{ title: "User Detail" }}
         />
+        <Stack.Screen name="LessonDetail" component={LessonDetail} />
       </Stack.Navigator>
     </NavigationContainer>
   );
