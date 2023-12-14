@@ -7,6 +7,7 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
@@ -16,6 +17,7 @@ const Appointment = () => {
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState("");
   const [appointments, setAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchAPIAppointment = async () => {
@@ -29,7 +31,7 @@ const Appointment = () => {
           }
         );
         setAppointments(res.data.result);
-        console.log(res.data.result);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data: ", error);
       }
@@ -37,6 +39,12 @@ const Appointment = () => {
 
     fetchAPIAppointment();
   }, []);
+
+  const handleNavigation = (callerName) => {
+    navigation.navigate("Call", {
+      callerName: callerName,
+    });
+  };
 
   const renderAppointmentCard = ({ item }) => {
     const currentDateTime = moment();
@@ -46,23 +54,40 @@ const Appointment = () => {
     let status = "";
 
     if (currentDateTime.isBefore(startDateTime, "second")) {
-      status = "Chưa bắt đầu";
+      status = "まだ始まっていない";
     } else if (
       currentDateTime.isBetween(startDateTime, endDateTime, "second")
     ) {
-      status = "Đang diễn ra";
+      status = "起こっていること";
     } else if (currentDateTime.isAfter(endDateTime, "second")) {
-      status = "Đã quá hạn";
+      status = "期限切れ";
     }
     const statusColors = {
-      "Chưa bắt đầu": "green",
-      "Đang diễn ra": "blue",
-      "Đã quá hạn": "red",
+      まだ始まっていない: "green",
+      起こっていること: "blue",
+      期限切れ: "red",
     };
     return (
-      <View style={[styles.card, { backgroundColor: item.backgroundColor }]}>
+      <View
+        style={[
+          styles.card,
+          {
+            backgroundColor: "white",
+            borderRadius: 20,
+            shadowColor: "#808080",
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.5,
+            shadowRadius: 4,
+            elevation: 5,
+            marginTop: 10,
+          },
+        ]}
+      >
         <Text style={[styles.cardTitle, { color: item.titleColor }]}>
-          Teacher name:{" "}
+          教師の名前:{" "}
           {item.Teacher.User.first_name + " " + item.Teacher.User.last_name}
         </Text>
         <Text
@@ -76,24 +101,21 @@ const Appointment = () => {
         </Text>
         <View style={styles.cardDates}>
           <Text style={styles.cardDate}>
-            Start: {startDateTime.format("YYYY-MM-DD HH:mm:ss")}
+            始める: {startDateTime.format("YYYY-MM-DD HH:mm:ss")}
           </Text>
         </View>
         <View style={styles.cardDates}>
           <Text style={styles.cardDate}>
-            End: {endDateTime.format("YYYY-MM-DD HH:mm:ss")}
+            終わる: {endDateTime.format("YYYY-MM-DD HH:mm:ss")}
           </Text>
         </View>
         <View style={styles.cardContent}>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity
               style={styles.actionButton}
-              onPress={() => navigation.navigate("Call")}
+              onPress={() => handleNavigation(item.Teacher.User.first_name + " " + item.Teacher.User.last_name)}
             >
-              <Text style={styles.buttonText}>Call</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.actionButton}>
-              <Text style={styles.buttonText}>Video</Text>
+              <Text style={styles.buttonText}>電話</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -113,19 +135,32 @@ const Appointment = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Enrolled Course Appointments</Text>
+      <Text style={styles.title}>登録済みのコースの予約</Text>
       <TextInput
         style={styles.searchInput}
         placeholder="Search"
         value={searchQuery}
         onChangeText={setSearchQuery}
       />
-      <FlatList
-        contentContainerStyle={styles.listContainer}
-        data={appointments.filter(searchFilter)}
-        renderItem={renderAppointmentCard}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      {isLoading ? (
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 50,
+          }}
+        >
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      ) : (
+        <FlatList
+          contentContainerStyle={styles.listContainer}
+          data={appointments.filter(searchFilter)}
+          renderItem={renderAppointmentCard}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      )}
     </View>
   );
 };
@@ -134,7 +169,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    paddingTop: 60,
+    paddingTop: 20,
   },
   listContainer: {
     paddingHorizontal: 10,
@@ -180,14 +215,16 @@ const styles = StyleSheet.create({
   },
   actionButton: {
     marginTop: 15,
-    backgroundColor: "#DCDCDC",
+    backgroundColor: "#4CB9E7",
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 5,
     marginRight: 10,
   },
   buttonText: {
-    color: "#00008B",
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 18,
   },
   highlightedText: {
     fontWeight: "bold",

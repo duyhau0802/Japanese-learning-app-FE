@@ -1,97 +1,98 @@
 // App.js
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import HomeScreen from './pages/Home' // Thêm import này
-import TeacherDetail from './pages/TeacherDetail'
-import CallScreen from './pages/CallScreen'
-import PaymentScreen from './pages/PaymentScreen'
-import AppointmentScreen from './pages/Appointment'
-import LoginScreen from './pages/LoginScreen'
-import RegisterScreen from './pages/RegisterScreen'
-import Course from './pages/Course'
-import SetAppoinmentScreen from './pages/SetApointment'
-import CourseDetailScreen from './pages/CourseDetail'
-import UserProfile from './pages/Profile'
-import UserDetailPage from './pages/UserDetailPage'
-import CourseDetail from './pages/CourseDetail'
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./pages/Home"; // Thêm import này
+import TeacherDetail from "./pages/TeacherDetail";
+import CallScreen from "./pages/CallScreen";
+import PaymentScreen from "./pages/PaymentScreen";
+import AppointmentScreen from "./pages/Appointment";
+import LoginScreen from "./pages/LoginScreen";
+import RegisterScreen from "./pages/RegisterScreen";
+import Course from "./pages/Course";
+import SetAppoinmentScreen from "./pages/SetApointment";
+import CourseDetailScreen from "./pages/CourseDetail";
+import UserProfile from "./pages/Profile";
+import UserDetailPage from "./pages/UserDetailPage";
+import CourseDetail from "./pages/CourseDetail";
+import LessonDetail from "./pages/LessonDetail";
 
-const Stack = createStackNavigator()
+const Stack = createStackNavigator();
 
-function App () {
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='Login'
+        initialRouteName="Home"
         screenOptions={{
           headerStyle: {
-            backgroundColor: '#3498db'
+            backgroundColor: "#3498db",
           },
-          headerTintColor: '#fff',
+          headerTintColor: "#fff",
           headerTitleStyle: {
-            fontWeight: 'bold'
-          }
+            fontWeight: "bold",
+          },
         }}
       >
-        {/* <Stack.Screen
-          name='Login'
+        <Stack.Screen
+          name="Login"
           component={LoginScreen}
-          options={{ title: 'Login' }}
+          options={{ title: "Login" }}
         />
         <Stack.Screen
-          name='Register'
+          name="Register"
           component={RegisterScreen}
-          options={{ title: 'Register' }}
-        />                                          
+          options={{ title: "Register" }}
+        />
         <Stack.Screen
-          name='Home'
+          name="Home"
           component={HomeScreen}
-          options={{ title: 'Home' }}
+          options={{ title: "Home" }}
         />
         <Stack.Screen
-          name='TeacherDetail'
+          name="TeacherDetail"
           component={TeacherDetail}
-          options={{ title: 'TeacherDetail' }}
+          options={{ title: "TeacherDetail" }}
         />
         <Stack.Screen
-          name='Appointment'
+          name="Appointment"
           component={AppointmentScreen}
-          options={{ title: 'Appointment' }}
-        /> */}
+          options={{ title: "Appointment" }}
+        />
         <Stack.Screen
-          name='CourseDetail'
+          name="CourseDetail"
           component={CourseDetailScreen}
-          options={{ title: 'CourseDetail' }}
+          options={{ title: "CourseDetail" }}
         />
         <Stack.Screen
-          name='Call'
+          name="Call"
           component={CallScreen}
-          options={{ title: 'Call' }}
+          options={{ title: "Call" }}
         />
-          <Stack.Screen
-            name='Payment'
-            component={PaymentScreen}
-            options={{ title: 'Payment' }}
-          />
         <Stack.Screen
-          name='SetAppointment'
+          name="Payment"
+          component={PaymentScreen}
+          options={{ title: "Payment" }}
+        />
+        <Stack.Screen
+          name="SetAppointment"
           component={SetAppoinmentScreen}
-          options={{ title: 'SetAppointment' }}
+          options={{ title: "SetAppointment" }}
         />
         <Stack.Screen
-          name='UserProfile'
+          name="UserProfile"
           component={UserProfile}
-          options={{ title: 'User Profile' }}
+          options={{ title: "User Profile" }}
         />
         <Stack.Screen
-          name='UserDetailPage'
+          name="UserDetailPage"
           component={UserDetailPage}
-          options={{ title: 'User Detail' }}
+          options={{ title: "User Detail" }}
         />
+        <Stack.Screen name="LessonDetail" component={LessonDetail} />
       </Stack.Navigator>
     </NavigationContainer>
-    
-  )
+  );
 }
 
-export default App
+export default App;
